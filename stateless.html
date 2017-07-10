@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+ <html>
+
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Reacting</title>
+    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+  </head>
+
+  <body>
+    <div id="container"></div>
+    <script type="text/babel">
+
+      // LightCounter Component 
+      
+      var LightingCounter = React.createClass({
+        getInitialState: function() {
+          return {
+            strikes: 0
+          };
+        },
+        timerTick: function() {
+          this.setState({
+            strikes: this.state.strikes + 100
+          });
+        },
+        componentDidMount: function() {
+          setInterval(this.timerTick, 1000);
+        },
+          render : function () {
+            var counterStyle = {
+              color: "#66FFFF",
+              fontSize: 50
+            };
+            var count = this.state.strikes.toLocaleString();
+
+
+            return (
+              <h1 style={counterStyle}>
+                {count}
+              </h1>
+          );
+      }
+}); 
+        
+      //Display Component 
+
+      var LightingCounterDisplay = React.createClass({
+        render : function () {
+
+          var commonStyle = {
+            margin: 0,
+            padding: 0
+          }
+
+        var divStyle = {
+          width: 250,
+          textAlign: "center",
+          backgroundColor: "black",
+          padding: 40,
+          fontFamily: "san-serif",
+          color: "#999",
+          borderRadius: 10
+        };
+
+        var textStyles = {
+          emphasis: {
+            fontSize: 38,
+            ...commonStyle
+          },
+          smallEmphasis: {
+            ...commonStyle
+          },
+          small: {
+            fontSize: 17,
+            opacity: 0.5,
+            ...commonStyle
+          }
+        }
+        
+        return (
+          <div style={divStyle}>
+            <LightingCounter />
+            <h2 style={textStyles.smallEmphasis}>LIGHTING STRIKES</h2>
+            <h2 style={textStyles.emphasis}>WORLD-WIDE</h2>
+            <p  style={textStyles.small}>(since you loaded this example)</p>
+          </div>
+        );
+      }
+}); 
+
+// Card Component 
+
+      ReactDOM.render(
+        <LightingCounterDisplay/>, 
+        document.querySelector('#container')
+       );
+
+    </script>
+  </body>
+
+</html>
